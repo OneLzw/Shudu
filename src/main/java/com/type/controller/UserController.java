@@ -32,6 +32,7 @@ public class UserController {
 		user.setName(name);
 		user.setAge(5);
 		user.setPassword(password);
+		System.out.println("one change");
 		userService.addUser(user);
 		return "jsp/user";
 	}
