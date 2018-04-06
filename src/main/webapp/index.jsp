@@ -8,5 +8,6 @@
 </head>
 <body>
     <a href="/user/oneuser">用户</a>
+    <a href="/history">用户</a>
 </body>
 </html>

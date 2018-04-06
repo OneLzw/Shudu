@@ -177,6 +177,12 @@
         <version>2.4</version>    
     </dependency>    
 
-    <!-- 上传组件包 end -->       
+    <!-- 上传组件包 end -->  
+    
+    <dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.38</version>
+</dependency>     
   </dependencies>
 </project>
