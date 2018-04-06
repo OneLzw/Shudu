@@ -7,14 +7,14 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.type.bean.User;
-import com.type.dao.UserDAO;
+import com.type.dao.UserMapper;
 import com.type.service.UserService;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
 	
 	@Resource
-	private UserDAO userDao;
+	private UserMapper userDao;
 
 	@Override
 	public User getUserById(int userId) {

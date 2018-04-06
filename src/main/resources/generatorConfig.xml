@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>    
+<!DOCTYPE generatorConfiguration    
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"    
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">    
+<generatorConfiguration>    
+<!-- 数据库驱动-->    
+<!-- sqljdbc4.jar是SQLServer数据库连接jar包，如果要连接MySQL数据库直接把sqljdbc4.jar改成mysql-connector-java-5.1.25-bin.jar -->  
+    <classPathEntry  location="mysql-connector-java-5.1.30.jar"/>    
+    <context id="DB2Tables"  targetRuntime="MyBatis3">    
+        <commentGenerator>    
+            <property name="suppressDate" value="true"/>    
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->    
+            <property name="suppressAllComments" value="true"/>    
+        </commentGenerator>    
+        <!--数据库链接URL，用户名、密码 -->    
+        <!--连接数据SQLServer     
+        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver" connectionURL="jdbc:sqlserver://119.10.46.240:1433;databaseName=shudu" userId="test" password="123456">  -->
+        <!--连接数据库MySQL -->    
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/shudu" userId="test" password="123456">   
+        </jdbcConnection>    
+        <javaTypeResolver>    
+            <property name="forceBigDecimals" value="false"/>    
+        </javaTypeResolver>    
+        <!-- 生成模型的包名和位置-->    
+        <!-- targetPackage="com.ssm.pojo"是生成代码的存放路径这里根据你的路径存放 -->    
+        <javaModelGenerator targetPackage="com.type.bean" targetProject="src">    
+            <property name="enableSubPackages" value="true"/>    
+            <property name="trimStrings" value="true"/>    
+        </javaModelGenerator>    
+        <!-- 生成映射文件的包名和位置-->    
+        <!-- targetPackage="com.ssm.pojo"是生成代码的存放路径这里根据你的路径存放 -->    
+        <sqlMapGenerator targetPackage="com.type.mapper" targetProject="src">    
+            <property name="enableSubPackages" value="true"/>    
+        </sqlMapGenerator>    
+        <!-- 生成DAO的包名和位置-->    
+        <!-- targetPackage="com.ssm.pojo"是生成代码的存放路径这里根据你的路径存放 -->    
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.type.dao" targetProject="src">    
+            <property name="enableSubPackages" value="true"/>    
+        </javaClientGenerator>    
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->    
+        <!-- tableName是要生成数据库映射文件的表名     domainObjectName要生成代码的实体类名 根据自己需求修改 -->    
+        <table tableName="history" domainObjectName="HistoryDAO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>  
+    </context>    
+</generatorConfiguration>

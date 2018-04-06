@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.type.bean.User;
 
-public interface UserDAO {
+public interface UserMapper {
 	
 	public User queryByPrimaryKey(Integer id);    
     
