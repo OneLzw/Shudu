@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.type.bean.User;
 import com.type.service.UserService;
 
+
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
