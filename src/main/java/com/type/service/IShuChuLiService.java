@@ -17,4 +17,8 @@ public interface IShuChuLiService{
     public List<List<Integer>> getFinishShu(int[][] data);
 
     public Map<String , List<int[][]>> getHistory();
+    
+    public int[][] getIntArray(String str);
+    
+    public boolean getNine(int[][] data);
 }

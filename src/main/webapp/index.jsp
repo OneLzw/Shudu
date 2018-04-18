@@ -7,7 +7,8 @@
 <title>welcome to chengdu</title>
 </head>
 <body>
-    <a href="/user/oneuser">用户</a>
-    <a href="/history">用户</a>
+    <a href="/user/oneuser">用户</a></br>
+    <a href="/nine/gotonine">9*9数独</a></br>
+    <a href="/history">历史</a>
 </body>
 </html>

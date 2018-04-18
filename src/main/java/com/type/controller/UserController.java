@@ -24,7 +24,7 @@ public class UserController {
 	@RequestMapping("oneuser")
 	public String getOneUser(Model model) {
 		model.addAttribute("name", "hello world");
-		return "view/user";
+		return "user";
 	}
 	
 	@RequestMapping("addUser")
@@ -36,7 +36,7 @@ public class UserController {
 		user.setPassword(password);
 		System.out.println("one change");
 		userService.addUser(user);
-		return "view/user";
+		return "user";
 	}
 	
 	@RequestMapping("userList")
@@ -47,7 +47,7 @@ public class UserController {
 			System.out.println("size : " + allUser.size());
 		}
 		model.addAttribute("userList", allUser);
-		return "view/userList";
+		return "userList";
 	}
 	
 	@RequestMapping("deleteUser")

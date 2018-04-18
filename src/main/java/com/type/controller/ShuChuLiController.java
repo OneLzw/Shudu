@@ -22,26 +22,13 @@ public class ShuChuLiController{
 
     @RequestMapping(value="countshu", method = RequestMethod.POST , produces = "application/json;")
     public String countshu (@RequestParam("longnumber")String longnumber) throws Exception {
-        String[] numbers = longnumber.split(";");
-        int[][] numberArray = new int[numbers.length][numbers.length];
-        String oneNumber = "0";
-        int oneNumberInteger = 0;
-        for (int i = 0 ; i < numbers.length ; i++) {
-            String oneNunbers = numbers[i];
-            String[] oneNumbersArray = oneNunbers.split(",");
-            for (int j = 0 ; j < oneNumbersArray.length ; j++) {
-                oneNumber = oneNumbersArray[j];
-                oneNumberInteger = Integer.parseInt(oneNumber);
-                numberArray[i][j] = oneNumberInteger;
-            }
-        }
-
-        //multi check
+    	int[][] numberArray = shuChuLiService.getIntArray(longnumber);
+        //重复性检测，看同一个九宫格内是否有相同的数字
         boolean nultiCheck = shuChuLiService.getRightShu(numberArray);
         if (!nultiCheck) {
-            return "view/hisroty";
+            return "hisroty";
         }
-        // sum check
+        // 和检测，看九宫格内横与竖之和是否为15
         boolean perfectCheck = shuChuLiService.getPerfectShu(numberArray);
         if (perfectCheck) {
             shuChuLiService.writeToTxt(numberArray , "" , true);
@@ -49,7 +36,7 @@ public class ShuChuLiController{
             shuChuLiService.writeToTxt(numberArray , "" , false);
         }
         shuChuLiService.getFinishShu(numberArray);
-        return "view/history";
+        return "history";
     }
 
     @RequestMapping(value = "/history")
@@ -59,6 +46,6 @@ public class ShuChuLiController{
         List<int[][]> perfectList = history.get("perfectList");
         modelMap.put("list" , list);
         modelMap.put("perfectList" , perfectList);
-        return new ModelAndView("view/history" , modelMap);
+        return new ModelAndView("history" , modelMap);
     }
 }
