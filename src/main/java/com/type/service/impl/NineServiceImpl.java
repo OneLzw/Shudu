@@ -11,22 +11,24 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.type.service.NineService;
 
 @Service
 public class NineServiceImpl implements NineService {
-
-    public boolean getNine(int[][] data) {
-        data = null;
+	
+	/**
+	 * 数独计算方法
+	 * @param data
+	 * @return 返回已经计算完毕的数组，如果无法计算完毕，则返回null
+	 */
+    public int[][] getNine(int[][] data) {
         int[][] dataClone = dataClone(data);
         Map<String, List<Integer>> emptyDataMap = getEmpty(data , null);
         updateData(emptyDataMap , dataClone);
-        xunHuan(dataClone );
         boolean hasEmptyOne =true;
-        int count = 0;
         while (hasEmptyOne) {
-            count++;
             //排除横，竖，小九宫格都有的数，获得基本的可填入数组
             emptyDataMap = getEmpty(dataClone , emptyDataMap);
             //如果在某个小九宫格内，某个可填入数只出现了一次，则确定该数填入该位置
@@ -45,14 +47,16 @@ public class NineServiceImpl implements NineService {
         if (perfect) {
         	//打印数独
             xunHuan(dataClone );
+            return dataClone;
         } else {
         	//尝试所有可填入两个数的位置，逐一进行尝试，看是否能填完数组
             int[][] perfectNine = tryOneOfTwo(emptyDataMap , dataClone);
             if (perfectNine != null){
                 xunHuan(perfectNine);
+                return perfectNine;
             }
         }
-        return false;
+        return null;
     }
     /**
      * 尝试所有可填入两个数的位置，逐一进行尝试，看是否能填完数组
@@ -858,23 +862,45 @@ public class NineServiceImpl implements NineService {
         }
         return hasRemove;
     }
-
-    public boolean getRightShu(int[][] numberArray) {
-        // 9 multi
+    
+    /**
+     * 简单的重复性检测
+     * @param numberArray
+     * @return true 通过 ， false 不通过
+     */
+    @Override
+    public boolean checkMultiShu(int[][] numberArray) {
         boolean right = true;
-        List<Integer> numberList = new ArrayList<>();
+        List<Integer> rowNumberList = null;
+        List<Integer> lineNumberList = null;
+        int oneNumber = 0;
+        int curLineNumber = 0;
         for (int i = 0 ; i < numberArray.length ; i++) {
+        	rowNumberList = new ArrayList<>();
+        	lineNumberList = new ArrayList<>();
             for (int j = 0 ; j <numberArray[i].length ; j++ ) {
-                int oneNumber = numberArray[i][j];
+                oneNumber = numberArray[i][j];
+                curLineNumber = numberArray[j][i];
                 if (oneNumber == 0) {
                     continue;
                 }
-                boolean contain = numberList.contains(oneNumber);
+                boolean contain = rowNumberList.contains(oneNumber);
                 if (contain) {
                     right = false;
                     break;
                 } else {
-                    numberList.add(oneNumber);
+                	rowNumberList.add(oneNumber);
+                }
+                
+                if (curLineNumber == 0) {
+                	continue;
+                }
+                boolean containLine = lineNumberList.contains(curLineNumber);
+                if (containLine) {
+                    right = false;
+                    break;
+                } else {
+                	lineNumberList.add(curLineNumber);
                 }
             }
         }
@@ -1206,5 +1232,22 @@ public class NineServiceImpl implements NineService {
             }
         }
         return dataClone;
+    }
+    
+    @Override
+    public int[][] fromStringToArray (String numberStr) {
+    	int[][] array = new int[9][9];
+    	if (StringUtils.isEmpty(numberStr)) {
+    		return array;
+    	}
+    	String[] rows = numberStr.split(";");
+    	String[] lines = null;
+    	for (int i = 0 ; i < rows.length ; i++) {
+    		lines = rows[i].split(",");
+    		for (int j = 0 ; j < lines.length ; j++) {
+    			array[i][j] = Integer.parseInt(lines[j]);
+    		}
+    	}
+    	return array;
     }
 }

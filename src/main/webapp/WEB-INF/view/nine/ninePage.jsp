@@ -4,6 +4,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+table
+  {
+  border-collapse:collapse;
+  }
+
+table, td, th
+  {
+  border:1px solid black;
+  }
+</style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
     <title>9*9数独</title>
@@ -11,18 +22,28 @@
 <body>
 <script type="text/javascript" src="../jQuery/jQuery-1.7.1.js"></script>
 <script type="text/javascript">
+window.onload=function(){
+	initBorder();
+// 	tdObj.css("border-right" , "2px solid;");
+}
+	function initBorder () {
+// 		$("table#numtable tr:nth-child(3n)").css("border-right","2px solid;");
+// 		 $("table#numtable tr:nth-child(3n)").css("background","#229922");
+		 $("table#numtable tr:nth-child(3n)").css("style","border-right:2px solid");
+    }
+	
     function jisuan () {
         var rows = "";
         var longnumber = "";
         var haveNumber = null;
-        for (var i = 1 ; i < 4 ; i++) {
+        for (var i = 1 ; i < 10 ; i++) {
             rows =  document.getElementsByName(i);
             for (var j = 0; j < rows.length ; j++) {
                 var number = rows[j].value;
                 if (number == "") {
                     number = 0;
                 } else {
-                    haveNumber = document.getElementById( i + "," + (j + 1));
+                    haveNumber = document.getElementById(""+ i + (j + 1));
                     haveNumber.disabled = "disabled";
                     haveNumber.style.backgroundColor  = "#3fad";
                 }
@@ -46,7 +67,10 @@
             cache:false,
             dataType:'json',
             success:function(data){
-                alert(data);
+                alert(data.msg);
+                if (data.state) {
+                	
+                }
             }
         });
     }
@@ -55,7 +79,7 @@
             var rows =  document.getElementsByName(i);
             for (var j = 0; j < rows.length ; j++) {
                 var haveNumber = rows[j];
-                haveNumber.value = "";
+                //haveNumber.value = "";
                 haveNumber.disabled = "";
                 haveNumber.style.backgroundColor  = "#fff";
             }
@@ -65,12 +89,12 @@
 
 
     <form action="countshu" method="post" style="padding-left: 15px">
-        <table border="1px">
+        <table frame="box" style = "border: 2px solid" id = "numtable">
             <c:forEach var="i" begin="1" end="9" step="1">
                 <tr>
                     <c:forEach var="j" begin="1" end="9" step="1">
                         <td>
-                            <input type="text" id="${i},${j}" name="${i}" style="width: 25px;text-align: center">
+                            <input type="text" id="${i}${j}" name="${i}" style="width: 25px;text-align: center">
                         </td>
                      </c:forEach>
                 </tr>

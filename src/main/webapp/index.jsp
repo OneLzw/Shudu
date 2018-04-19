@@ -8,7 +8,7 @@
 </head>
 <body>
     <a href="/user/oneuser">用户</a></br>
-    <a href="/nine/gotonine">9*9数独</a></br>
+    <a href="nine/gotonine">9*9数独</a></br>
     <a href="/history">历史</a>
 </body>
 </html>

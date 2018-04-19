@@ -1095,7 +1095,7 @@ public class ShuChuLiServiceImpl implements IShuChuLiService {
         }
         return perfect;
     }
-
+    
     public int[][] dataClone (int[][] data) {
         int[][] dataClone = new int[9][9];
         for (int i = 0 ; i < data.length ; i++) {

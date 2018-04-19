@@ -3,10 +3,14 @@ package com.type.controller;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.type.service.IShuChuLiService;
 import com.type.service.NineService;
 
@@ -22,26 +26,32 @@ public class NineController {
 	@Resource
 	NineService nineService;
 	
-	@Resource
-	IShuChuLiService shuChuLiService;
-	
 	@RequestMapping(value = "gotonine")
 	public String goToNinePage() {
 		return "nine/ninePage";
 	}
 	
 	@RequestMapping(value="countnine", method = RequestMethod.POST , produces = "application/json;")
-    public String countshu (@RequestParam("longnumber")String longnumber) throws Exception {
-    	int[][] numberArray = shuChuLiService.getIntArray(longnumber);
-        //重复性检测，看同一个九宫格内是否有相同的数字
-        boolean nultiCheck = shuChuLiService.getRightShu(numberArray);
+	@ResponseBody
+    public JSON countshu (Model model , @RequestParam("longnumber")String longnumber) throws Exception {
+		JSONObject json = new JSONObject();
+    	int[][] numberArray = nineService.fromStringToArray(longnumber);
+        //重复性检测
+        boolean nultiCheck = nineService.checkMultiShu(numberArray);
         if (!nultiCheck) {//有重复数字
-            return "nine/ninePage";
+        	json.put("state", false);
+        	json.put("msg", "行或列中有重复数字");
+            return json;
         }
-        nultiCheck = shuChuLiService.getNine(null);
-        if (nultiCheck) {//完美解答
-        	 return "nine/ninePage";
+        int[][] perfectArray = nineService.getNine(numberArray);
+        json.put("data", perfectArray);
+        if (perfectArray == null) {
+        	json.put("state", false);
+        	json.put("msg", "计算失败");
+        } else {
+        	json.put("state", true);
+        	json.put("msg", "计算成功");
         }
-        return "nine/ninePage";
+        return json;
     }
 }
