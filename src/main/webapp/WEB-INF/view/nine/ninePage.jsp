@@ -4,33 +4,97 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style type="text/css">
-table
-  {
-  border-collapse:collapse;
-  }
-
-table, td, th
-  {
-  border:1px solid black;
-  }
-</style>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style type="text/css">
+	    table
+		{
+		    border-collapse:collapse;
+		}
 	
-    <title>9*9数独</title>
+	    td 
+	    { 
+	        border:1px solid; 
+	    } 
+	  .bottomBorder {border-bottom:2px solid;}
+	  .rightBorder {border-right:2px solid;}
+	</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>9*9</title>
 </head>
 <body>
 <script type="text/javascript" src="../jQuery/jQuery-1.7.1.js"></script>
 <script type="text/javascript">
-window.onload=function(){
-	initBorder();
-// 	tdObj.css("border-right" , "2px solid;");
-}
+	window.onload=function(){
+		initBorder();
+	}
 	function initBorder () {
-// 		$("table#numtable tr:nth-child(3n)").css("border-right","2px solid;");
-// 		 $("table#numtable tr:nth-child(3n)").css("background","#229922");
-		 $("table#numtable tr:nth-child(3n)").css("style","border-right:2px solid");
+		$("table#numtable tr:nth-child(3n)").addClass("bottomBorder");
+		$("table").find("td").each(function(i){//搜寻表格里的每一个区间 
+			if((i+1)%3 == 0){
+				$(this).addClass("rightBorder");
+			}//给区间加上特定样式 
+		}); 
     }
+	
+	function valueChange(obj) {
+		var value = obj.value;
+		if (value.length > 0) {
+			value = value.substring(value.length-1 , value.length);
+			if (value == "0") {
+				value = "";
+			}
+			obj.value = value;
+		}
+		checkValue(obj)
+	}
+	
+	function checkValue (obj) {
+		var id = obj.id;
+		var x = id.substring(0,1);
+		var y = id.substring(1,2);
+		var value = obj.value;
+		var curxObj;
+		var curyObj;
+		var nextObj;
+		var xhasCommon = 0;
+		var yhasCommon = 0;
+		for (var i = 1 ; i < 10 ; i++) {
+			xhasCommon = 0;
+			yhasCommon = 0;
+			curxObj = document.getElementById("" + x + i);
+			curyObj = document.getElementById("" + i + y);
+			for (var j = 1 ; j < 10 ; j++) {
+				if (j != i) {
+					nextObj = document.getElementById("" + x + j);
+					if (curxObj.value == nextObj.value && curxObj.value != 0) {
+						xhasCommon = 1;
+						curxObj.style.backgroundColor="rgb(254, 112, 120)";
+						nextObj.style.backgroundColor="rgb(254, 112, 120)";
+					}
+					nextObj = document.getElementById("" + j + y);
+					if (curyObj.value == nextObj.value && curyObj.value != 0) {
+						yhasCommon = 1;
+						curyObj.style.backgroundColor="rgb(254, 112, 120)";
+						nextObj.style.backgroundColor="rgb(254, 112, 120)";
+					}
+				}
+			}
+			if (x != y) {
+				
+			}
+			if (xhasCommon == 0) {
+				curxObj.style.backgroundColor="";
+			}
+			if (yhasCommon == 0) {
+				curyObj.style.backgroundColor="";
+			}
+			if (x == y && x == i) {
+				if (xhasCommon == 1 || yhasCommon) {
+					curxObj.style.backgroundColor="rgb(254, 112, 120)";
+				}
+			}
+		}
+// 		curObj.style.backgroundColor="rgb(254, 112, 120)";
+	}
 	
     function jisuan () {
         var rows = "";
@@ -69,7 +133,12 @@ window.onload=function(){
             success:function(data){
                 alert(data.msg);
                 if (data.state) {
-                	
+                	var dataArray = data.data;
+                	for (var i = 0 ; i < 9 ; i++) {
+                		for (var j = 0 ; j < 9 ; j++) {
+                			document.getElementById(""+ (i+1) + (j+1)).value = dataArray[i][j];
+                		}
+                	}
                 }
             }
         });
@@ -94,14 +163,14 @@ window.onload=function(){
                 <tr>
                     <c:forEach var="j" begin="1" end="9" step="1">
                         <td>
-                            <input type="text" id="${i}${j}" name="${i}" style="width: 25px;text-align: center">
+                            <input type="text" id="${i}${j}" name="${i}" oninput="valueChange(this)" style="width: 25px;text-align: center;border:0px;">
                         </td>
                      </c:forEach>
                 </tr>
             </c:forEach>
         </table>
         <span>
-            <input type="button" name="tijiao" onclick="jisuan()" value="提交" >
+            <input type="button" name="tijiao" onclick="jisuan()" value="计算" >
             <input type="button" name="chongzhi" onclick="revert()" value="重置">
         </span>
     </form>

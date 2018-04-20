@@ -27,6 +27,7 @@ public class NineServiceImpl implements NineService {
         int[][] dataClone = dataClone(data);
         Map<String, List<Integer>> emptyDataMap = getEmpty(data , null);
         updateData(emptyDataMap , dataClone);
+        xunHuan(dataClone);
         boolean hasEmptyOne =true;
         while (hasEmptyOne) {
             //排除横，竖，小九宫格都有的数，获得基本的可填入数组
@@ -41,6 +42,7 @@ public class NineServiceImpl implements NineService {
             getTheOnlyOne(emptyDataMap , dataClone);
             //将所有只能填入一个数的位置，填入该数，从map中删除该坐标
             hasEmptyOne = updateData(emptyDataMap , dataClone);
+            xunHuan(dataClone);
         }
         //检查数独是否完整
         boolean perfect = checkPerfect(dataClone);
@@ -1146,6 +1148,7 @@ public class NineServiceImpl implements NineService {
      * @param data
      */
     public void xunHuan (int[][] data) {
+    	System.out.println("======================");
         for (int i = 0 ; i < data.length ; i++) {
             for (int j = 0 ; j < data[i].length ; j++) {
                 System.out.print(data[i][j] + " ");
