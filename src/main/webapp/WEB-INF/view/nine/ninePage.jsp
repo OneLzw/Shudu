@@ -22,6 +22,7 @@
 </head>
 <body>
 <script type="text/javascript" src="../jQuery/jQuery-1.7.1.js"></script>
+<script type="text/javascript" src="../js/nine/ninePage.js"></script>
 <script type="text/javascript">
 	window.onload=function(){
 		initBorder();
@@ -33,138 +34,6 @@
 				$(this).addClass("rightBorder");
 			}//给区间加上特定样式 
 		}); 
-    }
-	
-	function valueChange(obj) {
-		var value = obj.value;
-		if (value.length > 0) {
-			value = value.substring(value.length-1 , value.length);
-			if (value == "0") {
-				value = "";
-			}
-			obj.value = value;
-		}
-		checkValue(obj)
-	}
-	
-	function checkValue (obj) {
-		var id = obj.id;
-		var x = id.substring(0,1);
-		var y = id.substring(1,2);
-		var value = obj.value;
-		var curxObj;
-		var curyObj;
-		var nextObj;
-		var xhasCommon = 0;
-		var yhasCommon = 0;
-		for (var i = 1 ; i < 10 ; i++) {
-			xhasCommon = 0;
-			yhasCommon = 0;
-			curxObj = document.getElementById("" + x + i);
-			curyObj = document.getElementById("" + i + y);
-			for (var j = 1 ; j < 10 ; j++) {
-				if (j != i) {
-					nextObj = document.getElementById("" + x + j);
-					if (curxObj.value == nextObj.value && curxObj.value != 0) {
-						xhasCommon = 1;
-						curxObj.style.backgroundColor="rgb(254, 112, 120)";
-						nextObj.style.backgroundColor="rgb(254, 112, 120)";
-					}
-					nextObj = document.getElementById("" + j + y);
-					if (curyObj.value == nextObj.value && curyObj.value != 0) {
-						yhasCommon = 1;
-						curyObj.style.backgroundColor="rgb(254, 112, 120)";
-						nextObj.style.backgroundColor="rgb(254, 112, 120)";
-					}
-				}
-			}
-			if (x != y) {
-				
-			}
-			if (xhasCommon == 0) {
-				curxObj.style.backgroundColor="#fff";
-			}
-			if (yhasCommon == 0) {
-				curyObj.style.backgroundColor="#fff";
-			}
-			if (x == y && x == i) {
-				if (xhasCommon == 1 || yhasCommon) {
-					curxObj.style.backgroundColor="rgb(254, 112, 120)";
-				}
-			}
-		}
-// 		curObj.style.backgroundColor="rgb(254, 112, 120)";
-	}
-	
-    function jisuan () {
-        var rows = "";
-        var longnumber = "";
-        var haveNumber = null;
-        for (var i = 1 ; i < 10 ; i++) {
-            rows =  document.getElementsByName(i);
-            for (var j = 0; j < rows.length ; j++) {
-                var number = rows[j].value;
-                if (number == "") {
-                    number = 0;
-                } else {
-                    haveNumber = document.getElementById(""+ i + (j + 1));
-                    haveNumber.disabled = "disabled";
-                    haveNumber.style.backgroundColor  = "#3fad";
-                }
-                if (j == rows.length - 1) {
-                    longnumber += number;
-                } else {
-                    longnumber += number + ",";
-                }
-            }
-
-            longnumber += ";";
-        }
-
-        $.ajax({
-            type:'post',
-            url:'countnine',
-            // data:$("#myform").serialize(),
-            data: {
-                "longnumber" : longnumber
-            },
-            cache:false,
-            dataType:'json',
-            success:function(data){
-                alert(data.msg);
-                if (data.state) {
-                	var dataArray = data.data;
-                	for (var i = 0 ; i < 9 ; i++) {
-                		for (var j = 0 ; j < 9 ; j++) {
-                			document.getElementById(""+ (i+1) + (j+1)).value = dataArray[i][j];
-                		}
-                	}
-                }
-            }
-        });
-    }
-    function revert () {
-        for (var i = 1 ; i < 10 ; i++) {
-            var rows =  document.getElementsByName(i);
-            for (var j = 0; j < rows.length ; j++) {
-                var haveNumber = rows[j];
-                //haveNumber.value = "";
-                haveNumber.disabled = "";
-                haveNumber.style.backgroundColor  = "#fff";
-            }
-        }
-    }
-    
-    function clean () {
-    	 for (var i = 1 ; i < 10 ; i++) {
-             var rows =  document.getElementsByName(i);
-             for (var j = 0; j < rows.length ; j++) {
-                 var haveNumber = rows[j];
-                 haveNumber.value = "";
-                 haveNumber.disabled = "";
-                 haveNumber.style.backgroundColor  = "#fff";
-             }
-         }
     }
 </script>
 
