@@ -82,10 +82,10 @@
 				
 			}
 			if (xhasCommon == 0) {
-				curxObj.style.backgroundColor="";
+				curxObj.style.backgroundColor="#fff";
 			}
 			if (yhasCommon == 0) {
-				curyObj.style.backgroundColor="";
+				curyObj.style.backgroundColor="#fff";
 			}
 			if (x == y && x == i) {
 				if (xhasCommon == 1 || yhasCommon) {
@@ -154,6 +154,18 @@
             }
         }
     }
+    
+    function clean () {
+    	 for (var i = 1 ; i < 10 ; i++) {
+             var rows =  document.getElementsByName(i);
+             for (var j = 0; j < rows.length ; j++) {
+                 var haveNumber = rows[j];
+                 haveNumber.value = "";
+                 haveNumber.disabled = "";
+                 haveNumber.style.backgroundColor  = "#fff";
+             }
+         }
+    }
 </script>
 
 
@@ -172,6 +184,7 @@
         <span>
             <input type="button" name="tijiao" onclick="jisuan()" value="计算" >
             <input type="button" name="chongzhi" onclick="revert()" value="重置">
+            <input type="button" name="chongzhi" onclick="clean()" value="清空">
         </span>
     </form>
     </br>
