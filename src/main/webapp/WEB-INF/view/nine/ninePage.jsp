@@ -163,7 +163,7 @@
                 <tr>
                     <c:forEach var="j" begin="1" end="9" step="1">
                         <td>
-                            <input type="text" id="${i}${j}" name="${i}" oninput="valueChange(this)" style="width: 25px;text-align: center;border:0px;">
+                            <input type="text" id="${i}${j}" name="${i}" onkeyup='this.value=this.value.replace(/\D/gi,"")' oninput="valueChange(this)" style="width: 25px;text-align: center;border:0px;">
                         </td>
                      </c:forEach>
                 </tr>
