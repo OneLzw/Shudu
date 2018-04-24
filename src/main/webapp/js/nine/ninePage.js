@@ -13,8 +13,8 @@ function valueChange(obj) {
 function checkValue (obj) {
 	var commonLine = checkLine(obj);
 	var commonRow = checkRow(obj);
-	var littleNine = checkLittleNine(obj);
-	if (commonLine == 1 || commonRow == 1 || littleNine == 1) {
+//	var littleNine = checkLittleNine(obj);
+	if (commonLine == 1 || commonRow == 1) {
 		obj.style.backgroundColor="rgb(254, 112, 120)";
 	}
 	
