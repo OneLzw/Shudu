@@ -7,32 +7,14 @@ function valueChange(obj) {
 		}
 		obj.value = value;
 	}
-	checkValue(obj);
+	checkValueInit(obj);
 }
 
-function checkValue (obj) {
-	var commonLine = checkLine(obj);
-	var commonRow = checkRow(obj);
-//	var littleNine = checkLittleNine(obj);
-	if (commonLine == 1 || commonRow == 1) {
-		obj.style.backgroundColor="rgb(254, 112, 120)";
-	}
-	
-//	if (xhasCommon == 0) {
-//		curxObj.style.backgroundColor="#fff";
-//	}
-//	if (yhasCommon == 0) {
-//		curyObj.style.backgroundColor="#fff";
-//	}
-//	if (x == y && x == i) {
-//		if (xhasCommon == 1 || yhasCommon == 1) {
-//			curxObj.style.backgroundColor="rgb(254, 112, 120)";
-//		}
-//	}
-// 		curObj.style.backgroundColor="rgb(254, 112, 120)";
-}
-
-function checkLittleNine (x , y) {
+function checkValueInit(obj) {
+	var id = obj.id;
+	var x = id.substring(0,1);
+	var y = id.substring(1,2);
+	var value = obj.value;
 	var xStart = 1;
 	var xEnd = 1;
 	var yStart = 1;
@@ -56,41 +38,48 @@ function checkLittleNine (x , y) {
     	yStart = 7;
     	yEnd = 9;
     }
+	
 	var curObj;
-	var nextObj;
-	var xhasCommon = 0;
-	var specialCommon = 0;
+	for (var i = 1 ; i < 10 ; i++ ) {
+		curObj = document.getElementById("" + x + i);
+		if (curObj.value != 0) {
+			checkValue(curObj);
+		}
+		curObj = document.getElementById("" + i + y);
+		if (curObj.value != 0) {
+			checkValue(curObj);
+		}
+	}
+	
 	for (var i = xStart ; i <=xEnd ; i++) {
 		for (var j = yStart ; j <=yEnd ; j++ ) {
-			curObj = document.getElementById("" + i + j);
-			var hasCommon = 0;
-			if (curObj.value == 0) {
+			if (i == x && j == y) {
 				continue;
 			}
-			for (var m = xStart ; m <=xEnd ; m++) {
-				for (var n = yStart ; n <=yEnd ; n++ ) {
-					if (i == m && j == n) {
-						continue;
-					}
-					nextObj = document.getElementById("" + m + n);
-					if (nextObj.value == 0) {
-						
-					}
-					if (curObj.value == nextObj.value) {
-						curObj.style.backgroundColor="rgb(254, 112, 120)";
-						hasCommon = 1;
-					}
-				}
-			}
-			if (i == x && j == y) {
-				specialCommon = hasCommon;
-			}
-			if (hasCommon == 0) {
-				curObj.style.backgroundColor="#fff";
+			curObj = document.getElementById("" + i + j);
+			if (curObj.value != 0) {
+				checkValue(curObj);
 			}
 		}
-	}	
-	return specialCommon;
+	}
+}
+
+function checkValue (obj) {
+	var commonLine = checkLine(obj);
+	var commonRow = checkRow(obj);
+	var littleNine = checkLittleNine(obj);
+	if (commonLine == 1 || commonRow == 1 || littleNine == 1) {
+		obj.style.backgroundColor = "rgb(254, 112, 120)";
+	}
+	
+	if (commonLine == 0 && commonRow == 0 && littleNine == 0) {
+		if (obj.disabled) {
+			obj.style.backgroundColor = "#3fad";
+		} else {
+			obj.style.backgroundColor = "#fff";
+		}
+	}
+// 		curObj.style.backgroundColor="rgb(254, 112, 120)";
 }
 
 function jisuan () {
@@ -181,7 +170,7 @@ function checkLine (obj) {
 			continue;
 		}
 		if (curObj.value == value) {
-			hasCommon == 1;
+			hasCommon = 1;
 			break;
 		}
 	}
@@ -204,7 +193,7 @@ function checkRow (obj) {
 			continue;
 		}
 		if (curObj.value == value) {
-			hasCommon == 1;
+			hasCommon = 1;
 			break;
 		}
 	}
@@ -255,6 +244,9 @@ function checkLittleNine (obj) {
 				hasCommon = 1;
 				break;
 			}
+		}
+		if (hasCommon == 1) {
+			break;
 		}
 	}
 	return hasCommon;

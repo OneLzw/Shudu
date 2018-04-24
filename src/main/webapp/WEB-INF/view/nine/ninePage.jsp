@@ -23,7 +23,7 @@
 <body>
 <script type="text/javascript" src="../jQuery/jQuery-1.7.1.js"></script>
 <script type="text/javascript" src="../js/nine/ninePage.js"></script>
-<script type="text/javascript" src="../js/common/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript" src="../js/common/canvas-nest.min.js"></script> -->
 <script type="text/javascript">
 	window.onload=function(){
 		initBorder();
