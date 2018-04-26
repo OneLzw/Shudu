@@ -13,7 +13,7 @@ import com.type.bean.User;
 import com.type.service.UserService;
 
 
-
+@Deprecated
 @Controller
 @RequestMapping("/user")
 public class UserController {

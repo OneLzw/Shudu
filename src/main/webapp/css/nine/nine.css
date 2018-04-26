@@ -1,0 +1,5 @@
+table{border-collapse:collapse;}
+td { border:1px solid; } 
+.bottomBorder {border-bottom:2px solid;}
+.rightBorder {border-right:2px solid;}
+.divcCenter {position:absolute;left:43%;transform:translateX(-50%);top:30%;transform:translateY(-50%)}

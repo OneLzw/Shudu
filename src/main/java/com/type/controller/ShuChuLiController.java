@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated
 @RestController
 public class ShuChuLiController{
 	
