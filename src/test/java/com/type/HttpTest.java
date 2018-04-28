@@ -8,14 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.type.utils.HttpClientHelper;
-
-
 
 public class HttpTest {
 	
@@ -86,5 +85,40 @@ public class HttpTest {
 			pc = phone + "," + operator + "," + province + "," + city;
 		}
 		return pc;
+	}
+	
+	@Test
+	public void test1() {
+		int maxLength = 0;
+		int maxIndex = 0;
+		int curNumber = 0;
+		int curIndex = 0;
+		int curLength = 0;
+		String str = "acd125vf13679dd4562789ABCDEF";
+		int length;
+		char curChar;
+		for (int i = 0 ; i < (length = str.length()) ; i++) {
+			curChar = str.charAt(i);
+			if (!Character.isDigit(curChar)) {
+				curNumber = 0;
+				if (curLength > maxLength) {
+					maxIndex = curIndex;
+					maxLength = curLength;
+				}
+				curIndex = 0;
+				continue;
+			}
+			curNumber = Integer.valueOf(String.valueOf(curChar));
+			if (length == i+1) {
+				break;
+			}
+			if (curNumber < Integer.valueOf(String.valueOf(str.charAt(i+1)))) {
+				curLength ++;
+				if (curIndex == 0) {
+					curIndex = i;
+				}
+			}
+		}
+		System.out.println(str.substring(maxIndex, maxIndex + maxLength));
 	}
 }
